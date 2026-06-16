@@ -1,0 +1,78 @@
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap');
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: "Source Sans Pro", sans-serif;
+  color: #1e293b;
+  font-weight: 400;
+  background: linear-gradient(135deg, #4ea3a1 0%, #3a7e7d 100%);
+  width: 100%;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+h2, h3 { color: #ffffff; font-weight: 600; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+a { color: #ffffff; font-weight: 600; text-decoration: underline; }
+
+.auth-container, .settings-panel {
+  margin: 5% auto; max-width: 460px; padding: 40px 30px;
+  background: #ffffff; border-radius: 8px; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15); text-align: center;
+}
+
+.auth-container h2, .settings-panel h3 { color: #1e293b; font-size: 32px; margin-bottom: 25px; text-shadow: none; }
+.form-group { margin-bottom: 20px; text-align: left; max-width: 280px; margin-left: auto; margin-right: auto; }
+.form-group label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; color: #475569; }
+
+input, textarea, select {
+  border: 2px solid #cbd5e1; background-color: #f8fafc; width: 100%; max-width: 280px;
+  border-radius: 6px; font-family: "Source Sans Pro", sans-serif; padding: 10px 14px;
+  margin: 0 auto; display: block; text-align: left; font-size: 16px; color: #0f172a;
+  font-weight: 400; transition: all 0.2s ease-in-out;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: 0; border-color: #4ea3a1; background-color: #ffffff; box-shadow: 0 0 0 3px rgba(78, 163, 161, 0.2);
+}
+
+.btn, button {
+  appearance: none; outline: 0; background-color: #1e293b; color: #ffffff; border: 0;
+  padding: 12px 20px; border-radius: 6px; width: 100%; max-width: 280px; font-size: 16px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s; display: block; margin: 25px auto 0 auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn:hover, button:hover { background-color: #0f172a; transform: translateY(-1px); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); }
+
+.dashboard-container {
+  max-width: 1200px; margin: 20px auto; padding: 25px; background: rgba(255, 255, 255, 0.95);
+  border-radius: 12px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+}
+
+.dashboard-container h2 { color: #1e293b; font-size: 36px; text-shadow: none; margin-bottom: 25px; }
+.dashboard-container h3 {
+  color: #334155; font-size: 22px; text-shadow: none; margin: 35px 0 15px 0;
+  border-left: 4px solid #4ea3a1; padding-left: 10px;
+}
+
+.stats-grid { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-bottom: 30px; }
+.stats-card { background-color: #f1f5f9; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; text-align: center; min-width: 220px; flex: 1; }
+.stats-card h4 { font-size: 13px; color: #64748b; margin-bottom: 6px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+.stats-card p { font-size: 36px; font-weight: 700; color: #0f172a; }
+
+.search-bar { margin-bottom: 20px; max-width: 100%; }
+
+.data-table { width: 100%; border-collapse: collapse; margin-top: 15px; background-color: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+.data-table th, .data-table td { padding: 16px 20px; text-align: left; border-bottom: 1px solid #e2e8f0; font-size: 15px; }
+.data-table th { background-color: #f8fafc; color: #334155; font-weight: 600; text-transform: uppercase; font-size: 12px; letter-spacing: 0.5px; cursor: pointer; }
+.data-table tr:hover { background-color: #f1f5f9; }
+
+.badge { display: inline-block; padding: 4px 10px; font-size: 12px; border-radius: 4px; font-weight: 600; background: #cbd5e1; color: #1e293b; }
+.badge.admin { background-color: #ffedd5; color: #c2410c; }
+.badge.owner { background-color: #f1f5f9; color: #475569; }
+.badge.user { background-color: #ccfbf1; color: #0f766e; }
+
+.rating-btn { display: inline-block; width: auto; margin: 0 4px 4px 0; padding: 6px 12px; font-size: 14px; background: #ffffff; color: #475569; border: 1px solid #cbd5e1; border-radius: 4px; cursor: pointer; }
+.rating-btn.active { background: #eab308; color: #0f172a; border-color: #ca8a04; font-weight: 600; }
+.alert-error { background-color: #fff5f5; color: #c53030; padding: 12px; border-radius: 4px; margin-bottom: 20px; font-size: 14px; border-left: 4px solid #c53030; text-align: left; }
+.loading-indicator { text-align: center; padding: 40px; color: #64748b; font-size: 16px; font-style: italic; }
