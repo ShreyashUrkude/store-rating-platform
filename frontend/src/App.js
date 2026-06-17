@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import AdminDashboard from './pages/AdminDashboard';
 import UserDashboard from './pages/UserDashboard';
+import StoreOwnerDashboard from './pages/StoreOwnerDashboard';
 
 function App() {
     return (
@@ -18,7 +19,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         
-                        {/* Administration Territory */}
+                        {/* Secured Administration Territory */}
                         <Route 
                             path="/admin" 
                             element={
@@ -28,7 +29,7 @@ function App() {
                             } 
                         />
 
-                        {/*  Consumer Territory */}
+                        {/* Secured Consumer Territory */}
                         <Route 
                             path="/user" 
                             element={
@@ -38,7 +39,17 @@ function App() {
                             } 
                         />
 
-                        
+                        {/* Secured Business Owner Territory */}
+                        <Route 
+                            path="/owner" 
+                            element={
+                                <ProtectedRoute allowedRoles={['Store Owner']}>
+                                    <StoreOwnerDashboard />
+                                </ProtectedRoute>
+                            } 
+                        />
+
+                        {/* Fallback Catch-All Safety Net */}
                         <Route path="*" element={<Navigate to="/login" replace />} />
                     </Routes>
                 </div>
