@@ -6,6 +6,7 @@ import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import AdminDashboard from './pages/AdminDashboard';
+import UserDashboard from './pages/UserDashboard';
 
 function App() {
     return (
@@ -17,7 +18,7 @@ function App() {
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
                         
-                        {/* Secured Administration Territory */}
+                        {/* Administration Territory */}
                         <Route 
                             path="/admin" 
                             element={
@@ -27,7 +28,17 @@ function App() {
                             } 
                         />
 
-                        {/* Fallback Catch-All Safety Net */}
+                        {/*  Consumer Territory */}
+                        <Route 
+                            path="/user" 
+                            element={
+                                <ProtectedRoute allowedRoles={['Normal User']}>
+                                    <UserDashboard />
+                                </ProtectedRoute>
+                            } 
+                        />
+
+                        
                         <Route path="*" element={<Navigate to="/login" replace />} />
                     </Routes>
                 </div>
