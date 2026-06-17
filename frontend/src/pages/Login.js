@@ -8,6 +8,15 @@ const Login = () => {
     const [submitting, setSubmitting] = useState(false);
     const { login } = useContext(AuthContext);
     const navigate = useNavigate();
+    const { token, user } = useContext(AuthContext);
+   
+    React.useEffect(() => {
+     if (token && user) {
+        if (user.role === 'System Administrator') navigate('/admin');
+        else if (user.role === 'Store Owner') navigate('/owner');
+        else navigate('/user');
+     }
+    }, [token, user, navigate]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();

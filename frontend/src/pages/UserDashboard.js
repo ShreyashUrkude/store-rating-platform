@@ -6,13 +6,22 @@ const UserDashboard = () => {
     const [stores, setStores] = useState([]);
     const [search, setSearch] = useState('');
     const [loading, setLoading] = useState(true);
+    const [selectedRatings, setSelectedRatings] = useState({});
 
     const loadStores = () => {
         fetch(`http://localhost:5000/api/user/stores?search=${search}`, {
             headers: { 'Authorization': `Bearer ${token}` }
         })
             .then(res => res.json())
-            .then(data => { setStores(data); setLoading(false); })
+            .then(data => { 
+                setStores(data); 
+                setLoading(false);
+                const initialRatings = {};
+                data.forEach(s => {
+                    initialRatings[s.id] = s.personal_rating || null;
+                });
+                setSelectedRatings(initialRatings);
+            })
             .catch(err => console.error(err));
     };
 
@@ -20,7 +29,16 @@ const UserDashboard = () => {
         loadStores();
     }, [search, token]);
 
-    const handleRate = async (storeId, ratingValue) => {
+    const handleSelectStar = (storeId, value) => {
+        setSelectedRatings(prev => ({ ...prev, [storeId]: value }));
+    };
+
+    const handleSubmitRate = async (storeId) => {
+        const ratingValue = selectedRatings[storeId];
+        if (!ratingValue) {
+            alert('Please select a star rating value first');
+            return;
+        }
         try {
             const res = await fetch('http://localhost:5000/api/user/rate', {
                 method: 'POST',
@@ -31,6 +49,7 @@ const UserDashboard = () => {
                 body: JSON.stringify({ storeId, ratingValue })
             });
             if (res.ok) {
+                alert('rating modify successfully');
                 loadStores();
             } else {
                 const data = await res.json();
@@ -59,17 +78,20 @@ const UserDashboard = () => {
                 <table className="data-table">
                     <thead>
                         <tr>
+                            <th>SNo</th>
                             <th>Store Identity Name</th>
                             <th>Contact Email</th>
                             <th>Physical Address</th>
                             <th>Global Rating</th>
                             <th>Total Reviews</th>
-                            <th style={{ textAlign: 'center' }}>Your Evaluation Score</th>
+                            <th style={{ textAlign: 'center' }}>Select Rating Score</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {stores.map(s => (
+                        {stores.map((s, index) => (
                             <tr key={s.id}>
+                                <td>{index + 1}</td>
                                 <td><strong>{s.name}</strong></td>
                                 <td>{s.email}</td>
                                 <td>{s.address}</td>
@@ -79,16 +101,24 @@ const UserDashboard = () => {
                                     </span>
                                 </td>
                                 <td><span className="badge user">{s.total_reviews} reviews</span></td>
-                                <td style={{ textAlign: 'center', minWidth: '220px' }}>
+                                <td style={{ textAlign: 'center', minWidth: '200px' }}>
                                     {[1, 2, 3, 4, 5].map(num => (
                                         <button
                                             key={num}
-                                            className={`rating-btn ${s.personal_rating === num ? 'active' : ''}`}
-                                            onClick={() => handleRate(s.id, num)}
+                                            className={`rating-btn ${selectedRatings[s.id] === num ? 'active' : ''}`}
+                                            onClick={() => handleSelectStar(s.id, num)}
                                         >
                                             {num}
                                         </button>
                                     ))}
+                                </td>
+                                <td>
+                                    <button 
+                                        onClick={() => handleSubmitRate(s.id)}
+                                        style={{ margin: 0, padding: '6px 12px', fontSize: '13px', width: 'auto', backgroundColor: '#3a7e7d' }}
+                                    >
+                                        {s.personal_rating ? 'Modify Rating' : 'Submit Rating'}
+                                    </button>
                                 </td>
                             </tr>
                         ))}

@@ -53,13 +53,16 @@ router.post('/login', async (req, res, next) => {
 
 router.put('/update-password', authenticateToken, validatePasswordUpdate, async (req, res, next) => {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return res.status(400).json({ errors: errors.array() });
+    if (!errors.isEmpty()) {
+       
+        return res.status(400).json({ message: errors.array()[0].msg });
+    }
 
     const { newPassword } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
         await db.query('UPDATE users SET password = ? WHERE id = ?', [hashedPassword, req.user.id]);
-        res.json({ message: 'Password updated successfully' });
+        res.json({ message: 'Password updated successfully!' });
     } catch (err) {
         next(err);
     }
