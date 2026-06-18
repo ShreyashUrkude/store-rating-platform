@@ -24,7 +24,7 @@ router.get('/my-store-stats', async (req, res, next) => {
         );
 
         const [customerReviews] = await db.query(
-            `SELECT u.name as customer_name, u.email as customer_email, r.rating_value 
+            `SELECT u.name as customer_name,  r.rating_value 
              FROM ratings r 
              JOIN users u ON r.user_id = u.id 
              WHERE r.store_id = ? 

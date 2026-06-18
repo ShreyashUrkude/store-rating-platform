@@ -33,7 +33,7 @@ const UserDashboard = () => {
         setSelectedRatings(prev => ({ ...prev, [storeId]: value }));
     };
 
-    const handleSubmitRate = async (storeId) => {
+    const handleActionRate = async (storeId, isModification) => {
         const ratingValue = selectedRatings[storeId];
         if (!ratingValue) {
             alert('Please select a star rating value first');
@@ -49,7 +49,7 @@ const UserDashboard = () => {
                 body: JSON.stringify({ storeId, ratingValue })
             });
             if (res.ok) {
-                alert('rating modify successfully');
+                alert(isModification ? 'rating modify successfully' : 'Rating submitted successfully');
                 loadStores();
             } else {
                 const data = await res.json();
@@ -80,12 +80,12 @@ const UserDashboard = () => {
                         <tr>
                             <th>SNo</th>
                             <th>Store Identity Name</th>
-                            <th>Contact Email</th>
-                            <th>Physical Address</th>
-                            <th>Global Rating</th>
+                            <th>Store Address</th>
+                            <th>Global Average</th>
                             <th>Total Reviews</th>
+                            <th style={{ textAlign: 'center' }}>Your Current Rating</th>
                             <th style={{ textAlign: 'center' }}>Select Rating Score</th>
-                            <th>Actions</th>
+                            <th style={{ textAlign: 'center' }}>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -93,7 +93,6 @@ const UserDashboard = () => {
                             <tr key={s.id}>
                                 <td>{index + 1}</td>
                                 <td><strong>{s.name}</strong></td>
-                                <td>{s.email}</td>
                                 <td>{s.address}</td>
                                 <td>
                                     <span style={{ fontWeight: '600', color: '#b7791f' }}>
@@ -101,24 +100,82 @@ const UserDashboard = () => {
                                     </span>
                                 </td>
                                 <td><span className="badge user">{s.total_reviews} reviews</span></td>
-                                <td style={{ textAlign: 'center', minWidth: '200px' }}>
-                                    {[1, 2, 3, 4, 5].map(num => (
-                                        <button
-                                            key={num}
-                                            className={`rating-btn ${selectedRatings[s.id] === num ? 'active' : ''}`}
-                                            onClick={() => handleSelectStar(s.id, num)}
-                                        >
-                                            {num}
-                                        </button>
-                                    ))}
+                                <td style={{ textAlign: 'center' }}>
+                                    {s.personal_rating ? (
+                                        <span style={{ backgroundColor: '#e2e8f0', padding: '4px 10px', borderRadius: '12px', fontWeight: 'bold', color: '#1e293b' }}>
+                                            ★ {s.personal_rating}
+                                        </span>
+                                    ) : (
+                                        <span style={{ color: '#94a3b8', fontStyle: 'italic', fontSize: '13px' }}>Not Rated Yet</span>
+                                    )}
                                 </td>
-                                <td>
-                                    <button 
-                                        onClick={() => handleSubmitRate(s.id)}
-                                        style={{ margin: 0, padding: '6px 12px', fontSize: '13px', width: 'auto', backgroundColor: '#3a7e7d' }}
-                                    >
-                                        {s.personal_rating ? 'Modify Rating' : 'Submit Rating'}
-                                    </button>
+                                <td style={{ textAlign: 'center', minWidth: '180px' }}>
+    <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', flexDirection: 'row' }}>
+        {[1, 2, 3, 4, 5].map(num => (
+            <div
+                key={num}
+                onClick={() => handleSelectStar(s.id, num)}
+                style={{
+                    position: 'relative',
+                    width: '32px',
+                    height: '32px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    userSelect: 'none',
+                    transition: 'transform 0.1s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.transform = 'scale(1.15)'}
+                onMouseLeave={(e) => e.target.style.transform = 'scale(1)'}
+            >
+                {/* Background Star Character */}
+                <span style={{
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    width: '100%',
+                    height: '100%',
+                    fontSize: '32px',
+                    lineHeight: '32px',
+                    textAlign: 'center',
+                    color: selectedRatings[s.id] >= num ? '#ca8a04' : '#cbd5e1',
+                    zIndex: 1
+                }}>
+                    ★
+                </span>
+                
+                {/* Foreground Star Numeric Label */}
+                <span style={{
+                    position: 'relative',
+                    zIndex: 2,
+                    fontSize: '11px',
+                    fontWeight: 'bold',
+                    color: selectedRatings[s.id] >= num ? '#ffffff' : '#475569',
+                    marginTop: '2px' 
+                }}>
+                    {num}
+                </span>
+            </div>
+        ))}
+    </div>
+</td>
+                                <td style={{ textAlign: 'center' }}>
+                                    {s.personal_rating ? (
+                                        <button 
+                                            onClick={() => handleActionRate(s.id, true)}
+                                            style={{ margin: 0, padding: '6px 12px', fontSize: '13px', width: 'auto', backgroundColor: '#475569', color: '#ffffff' }}
+                                        >
+                                            Modify Rating
+                                        </button>
+                                    ) : (
+                                        <button 
+                                            onClick={() => handleActionRate(s.id, false)}
+                                            style={{ margin: 0, padding: '6px 12px', fontSize: '13px', width: 'auto', backgroundColor: '#3a7e7d', color: '#ffffff' }}
+                                        >
+                                            Submit Rating
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))}

@@ -36,7 +36,7 @@ const StoreOwnerDashboard = () => {
 
             <div className="stats-grid">
                 <div className="stats-card" style={{ borderTop: '4px solid #ca8a04' }}>
-                    <h4>Aggregate Score</h4>
+                    <h4>Average Rating</h4>
                     <p style={{ color: '#ca8a04' }}>★ {metrics?.avgRating}</p>
                 </div>
                 <div className="stats-card" style={{ borderTop: '4px solid #4ea3a1' }}>
@@ -83,7 +83,7 @@ const StoreOwnerDashboard = () => {
                             <tr>
                                 <th>Customer Name</th>
                                 <th>Customer Email</th>
-                                <th>Casted Rating</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -93,7 +93,6 @@ const StoreOwnerDashboard = () => {
                                 reviewsList.map((review, i) => (
                                     <tr key={i}>
                                         <td><strong>{review.customer_name}</strong></td>
-                                        <td>{review.customer_email}</td>
                                         <td><span style={{ color: '#ca8a04', fontWeight: 'bold' }}>★ {review.rating_value}</span></td>
                                     </tr>
                                 ))

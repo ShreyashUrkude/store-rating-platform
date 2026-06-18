@@ -138,7 +138,7 @@ const AdminDashboard = () => {
                             <input type="email" className="form-control" value={storeForm.email} onChange={e => setStoreForm({...storeForm, email: e.target.value})} required />
                         </div>
                         <div className="form-group" style={{ maxWidth: '100%' }}>
-                            <label>Physical Outlet Address</label>
+                            <label>Store Address</label>
                             <input type="text" className="form-control" value={storeForm.address} onChange={e => setStoreForm({...storeForm, address: e.target.value})} required />
                         </div>
                         <div className="form-group" style={{ maxWidth: '100%' }}>
@@ -152,14 +152,14 @@ const AdminDashboard = () => {
 
             <h3>Registered Store Directory</h3>
             <input type="text" className="search-bar" placeholder="🔍 Filter stores by Name, Email, or Address..." onChange={e => setStoreSearch(e.target.value)} />
-            {storesLoading ? <div className="loading-indicator">Synchronizing store telemetry records...</div> : (
+            {storesLoading ? <div className="loading-indicator">Synchronizing store elemetry records...</div> : (
                 <table className="data-table">
                     <thead>
                         <tr>
                             <th onClick={() => toggleSort('store', 'name')}>Store Identity Name ↕</th>
                             <th onClick={() => toggleSort('store', 'email')}>Email Address ↕</th>
-                            <th onClick={() => toggleSort('store', 'address')}>Physical Address ↕</th>
-                            <th onClick={() => toggleSort('store', 'avg_rating')}>Calculated Rating ↕</th>
+                            <th onClick={() => toggleSort('store', 'address')}>Store Address ↕</th>
+                            <th onClick={() => toggleSort('store', 'avg_rating')}>Average Rating ↕</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -183,9 +183,9 @@ const AdminDashboard = () => {
                         <tr>
                             <th onClick={() => toggleSort('user', 'name')}>Legal Profile Name ↕</th>
                             <th onClick={() => toggleSort('user', 'email')}>Email Account ↕</th>
-                            <th onClick={() => toggleSort('user', 'address')}>Physical Residence ↕</th>
+                            <th onClick={() => toggleSort('user', 'address')}>Address ↕</th>
                             <th onClick={() => toggleSort('user', 'role')}>Authority Role ↕</th>
-                            <th>Owner Score</th>
+                            <th>Store Rating</th>
                         </tr>
                     </thead>
                     <tbody>
