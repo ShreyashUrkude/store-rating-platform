@@ -43,6 +43,23 @@ Follow these explicit commands to quickly deploy RateXpress within your local de
 - **Node.js:** Runtime Environment (v16.x or higher recommended)
 - **Database Engine:** MySQL Server instance actively listening on its standard native port
 
+
+### You can use this emails and password to test the platform
+1. System Administrator Account
+
+    Email: admin@platform.com
+    Password: Admin@1234
+
+2. Store Owner Account
+
+    Email: owner_alpha@business.com
+    Password: Owner@1234
+
+4. Consumer (Normal User) Account
+
+    Email: user_one@outlook.com
+    Password: User@1234
+
 ### 1. Database Configuration
 Launch your local MySQL command line interface or workbench management portal and run your foundational schema initiation script:
 
